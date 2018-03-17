@@ -120,7 +120,7 @@ mList1.printall()
 for x in mList1.elements():
     print(x) 
 '''
-
+# 带尾指针的链表结构
 class LList1(LList):
     def __init__(self):
         LList.__init__(self)
