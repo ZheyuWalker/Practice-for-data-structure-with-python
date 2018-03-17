@@ -109,17 +109,62 @@ class LList:
         while p:
             yield p.elem
             p = p.next
-'''
+    # Insert sort
+    def sort1(self):
+        if self._head is None:
+            return
+        crt = self._head.next
+        while crt:
+            x = crt.elem
+            p = self._head
+            while p is not crt and p.elem <= x:
+                p = p.next
+            while p is not crt:
+                '''
+                temp = p.elem
+                p.elem = x
+                x = temp
+                '''
+                p.elem, x = x, p.elem
+                p = p.next
+            crt.elem = x
+            crt = crt.next
+
+    def sort(self):
+        p = self._head
+        if p is None or p.next is None:
+            return
+
+        rem = p.next
+        p.next = None
+        while rem:
+            p = self._head
+            q = None
+            while p and p.elem <= rem.elem:
+                q = p
+                p = p.next
+            if q:
+                q.next = rem
+            else:   # 表头插入
+                self._head = rem
+            q = rem
+            rem = rem.next
+            q.next = p
+
 mList1 = LList()
 for i in range(10):
     mList1.prepend(i)
 for i in range(1, 10):
     mList1.append(i)
 mList1.printall()
-# mList1.for_each(print)
-for x in mList1.elements():
-    print(x) 
 '''
+mList1.for_each(print)
+for x in mList1.elements():
+    print(x)
+'''
+mList1.sort()
+mList1.printall()
+
 # 带尾指针的链表结构
 class LList1(LList):
     def __init__(self):
