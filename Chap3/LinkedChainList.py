@@ -47,3 +47,12 @@ class  LCList:
             if p is self._rear:
                 break
             p = p.next
+mList1 = LCList()
+for i in range(10):
+    mList1.prepend(i)
+for i in range(1, 10):
+    mList1.append(i)
+mList1.printall()
+# mList1.for_each(print)
+for x in mList1.elements():
+    print(x) 
