@@ -26,7 +26,6 @@ p = head
 for i in range(2,11):
     p.next = LNode(i)
     p = p.next
-
 p = head
 while p:
     print(p.elem)
@@ -151,6 +150,67 @@ class LList:
             rem = rem.next
             q.next = p
 
+    # practice1 - del_first, del_last
+    def del_first(self):
+        if self._head is None:
+            raise LinkedListUnderflow
+        self._head = self._head.next
+
+    def del_last(self):
+        if self._head is None:
+            raise LinkedListUnderflow
+        elif self._head.next is None:
+            self._head = None
+        else:
+            p = self._head
+            while p.next.next:
+                p = p.next
+            p.next = None
+    
+    # practice2 - del_(i), insert(i)
+    def del_(self, i):
+        if i >= len(self):
+            raise LinkedListUnderflow
+        if i == 0:
+            self.del_first()
+        p = self._head
+        for k in range(i-1):
+            p = p.next
+        p.next = p.next.next
+
+    def insert(self, i, elem):
+        if i > len(self):
+            raise LinkedListUnderflow
+        if i == 0:
+            self.prepend(elem)
+        p = self._head
+        for k in range(i-1):
+            p = p.next
+        p.next = LNode(elem, p.next)
+
+    # practice3 - __len__
+    def __len__(self):
+        p = self._head
+        length = 0
+        while p:
+            length += 1
+            p = p.next
+        return length
+
+    # practice4 - __eq__, __lt__, __gt__
+
+    # practice5 - LinkedList->list & list->LinkedList
+
+    # practice6 - rev_visit(self, op)
+
+    # practice7 - del_minimal, del_if, drop_duplicate
+
+    # practice8 - interleaving
+
+    # practice9 - sort
+
+    # practice10 - partition 
+
 mList1 = LList()
 for i in range(10):
     mList1.prepend(i)
@@ -164,6 +224,11 @@ for x in mList1.elements():
 '''
 mList1.sort()
 mList1.printall()
+mList1.del_(2)
+mList1.printall()
+mList1.insert(12, 2)
+mList1.printall()
+print(len(mList1))
 
 # 带尾指针的链表结构
 class LList1(LList):
@@ -205,7 +270,7 @@ class LList1(LList):
         p.next = None
         self._rear = p
         return e
-
+'''
 random.seed(3)
 mList1 = LList1()
 mList1.prepend(98)
@@ -213,3 +278,4 @@ for i in range(11, 20):
     mList1.append(random.randint(1,20))
 for x in mList1.filter(lambda y: y%2 == 0):
     print(x)
+'''
