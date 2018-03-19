@@ -183,10 +183,11 @@ class LList:
             raise LinkedListUnderflow
         if i == 0:
             self.prepend(elem)
-        p = self._head
-        for k in range(i-1):
-            p = p.next
-        p.next = LNode(elem, p.next)
+        else:
+            p = self._head
+            for k in range(i-1):
+                p = p.next
+            p.next = LNode(elem, p.next)
 
     # practice3 - __len__
     def __len__(self):
@@ -198,25 +199,189 @@ class LList:
         return length
 
     # practice4 - __eq__, __lt__, __gt__
+    def __eq__(self, another):
+        if len(self) != len(another):
+            return False
+        p, q = self._head, another._head
+        while p and q:
+            if p.elem != q.elem:
+                return False
+            p, q = p.next, q.next
+        return True
+
+    def __lt__(self, another):
+        p, q = self._head, another._head
+        if p is None and q is None:
+            return False
+        while p and q:
+            if p. elem == q.elem:
+                p, q = p.next, q.next
+            elif p.elem > q.elem:
+                return False
+            else:
+                return True
+        if p is None:
+            return True
+        else:
+            return False  
+
+    def __gt__(self, another):
+        if self == another or self < another:
+            return False
+        else:
+            return True
 
     # practice5 - LinkedList->list & list->LinkedList
+    def from_list(self, list_=[]):
+        if list_:
+            self._head = LNode(list_[0])
+        else: 
+            self._head = None
+        p = self._head
+        for i in list_[1:]:
+            p.next = LNode(i, p.next)
+            p = p.next
 
-    # practice6 - rev_visit(self, op)
+    def to_list(self, delete = False):
+        if self.is_empty():
+            return []
+        p = self._head
+        list_ = []
+        while p:
+            list_.append(p.elem)
+            p = p.next
+        if delete:
+            self._head = None
+        return list_
+
+    # practice6 - rev_visit(self, operation)
+    def rev(self):
+        p = None
+        while self._head:
+            temp = self._head
+            self._head = temp.next
+            temp.next = p
+            p = temp
+        self._head = p
+
+    def rev_visit(self, op):
+        self.rev()
+        if self._head is None:
+            raise LinkedListUnderflow
+        p = self._head
+        while p:
+            op(p.elem)
+            p = p.next
+        self.rev()
 
     # practice7 - del_minimal, del_if, drop_duplicate
+    def del_minimal(self):
+        if self._head is None:
+            raise LinkedListUnderflow
+        p = self._head.next
+        min_val = self._head.elem
+        while p:
+            if p.elem < min_val:
+                min_val = p.elem
+            p = p.next
+        p = self._head
+        while p.next:
+            if p.next.elem == min_val:
+                p.next = p.next.next
+            p = p.next
+        if self._head.elem == min_val:
+            self._head = self._head.next
+
+    def del_if(self, pred):
+        if self._head is None:
+            raise LinkedListUnderflow
+        p = self._head
+        while p.next:
+            if pred(p.next.elem):
+                p.next = p.next.next
+            else:
+                p = p.next
+        if pred(self._head.elem):
+            self._head = self._head.next
+
+    def del_duplicate(self):
+        if self._head is None:
+            raise LinkedListUnderflow
+        elements = [self._head.elem]
+        p = self._head
+        while p.next:
+            if p.next.elem in elements:
+                p.next = p.next.next
+            else:
+                elements.append(p.next.elem)
+                p = p.next
 
     # practice8 - interleaving
+    def interleaving(self, another):
+        p, q = self._head, another._head
+        if p is None or q is None:
+            self._head = another._head if q else self._head 
+            return
+        while p.next and q:
+            m, n = p.next, q.next
+            q.next = p.next
+            p.next = q
+            p, q = m, n
+        if p.next is None:
+            p.next = q
 
-    # practice9 - sort
+    # practice9 - sort0(未能完全理解题意)
+    def sort0(self):
+        if self._head is None:
+            raise LinkedListUnderflow
+        p = self._head.next
+        self._head.next = None
+        while p:
+            q = self._head
+            if p.elem <= self._head.elem:
+                self._head = p
+                p = p.next
+                self._head.next = q
+                continue
+            while q and q.next:
+                if q.next.elem < p.elem:
+                    q = q.next
+                else: 
+                    break
+            temp = q.next
+            q.next = p
+            p = p.next
+            q.next.next = temp
 
     # practice10 - partition 
+    def partition(self, pred):
+        if self._head is None:
+            raise LinkedListUnderflow
+        another = LList()
+        p = self._head
+        count = 0
+        while p.next:
+            if pred(p.next.elem):
+                another.append(p.next.elem)
+                p.next = p.next.next
+            else:
+                p = p.next
+        if pred(self._head.elem):
+            another.prepend(self._head.elem)
+            self._head = self._head.next
+        return another, self
+
 
 mList1 = LList()
+mList2 = LList()
 for i in range(10):
     mList1.prepend(i)
+    mList2.prepend(i)
 for i in range(1, 10):
     mList1.append(i)
+    mList2.append(i)
 mList1.printall()
+print('mList1 == mList2 is', mList1 == mList2)
 '''
 mList1.for_each(print)
 for x in mList1.elements():
@@ -224,11 +389,41 @@ for x in mList1.elements():
 '''
 mList1.sort()
 mList1.printall()
+print('mList1 < mList2 is', mList1 < mList2)
 mList1.del_(2)
 mList1.printall()
-mList1.insert(12, 2)
+mList1.insert(0, 10)
 mList1.printall()
+print('mList1 > mList2 is', mList1 > mList2)
 print(len(mList1))
+# practice5
+mList1.from_list([1, 2, 's'])
+mList1.printall()
+print(mList1.to_list())
+# practice6
+mList1.rev_visit(print)
+# practice7
+mList2.sort()
+mList2.del_minimal()
+mList2.printall()
+mList2.del_if(lambda x: x<=6)
+mList2.printall()
+mList2.del_duplicate()
+mList2.printall()
+#practice8
+mList3 = LList()
+mList3.from_list([27, -1])
+mList2.interleaving(mList3)
+mList2.printall()
+#practice9
+mList2.sort0()
+mList2.printall()
+#practice10
+x, y = mList2.partition(lambda x: x%3 == 0)
+x.printall()
+y.printall()
+
+
 
 # 带尾指针的链表结构
 class LList1(LList):
