@@ -380,48 +380,50 @@ for i in range(10):
 for i in range(1, 10):
     mList1.append(i)
     mList2.append(i)
-mList1.printall()
-print('mList1 == mList2 is', mList1 == mList2)
+
 '''
 mList1.for_each(print)
 for x in mList1.elements():
     print(x)
 '''
-mList1.sort()
-mList1.printall()
-print('mList1 < mList2 is', mList1 < mList2)
-mList1.del_(2)
-mList1.printall()
-mList1.insert(0, 10)
-mList1.printall()
-print('mList1 > mList2 is', mList1 > mList2)
-print(len(mList1))
-# practice5
-mList1.from_list([1, 2, 's'])
-mList1.printall()
-print(mList1.to_list())
-# practice6
-mList1.rev_visit(print)
-# practice7
-mList2.sort()
-mList2.del_minimal()
-mList2.printall()
-mList2.del_if(lambda x: x<=6)
-mList2.printall()
-mList2.del_duplicate()
-mList2.printall()
-#practice8
-mList3 = LList()
-mList3.from_list([27, -1])
-mList2.interleaving(mList3)
-mList2.printall()
-#practice9
-mList2.sort0()
-mList2.printall()
-#practice10
-x, y = mList2.partition(lambda x: x%3 == 0)
-x.printall()
-y.printall()
+if __name__ == '__main__':
+    mList1.printall()
+    print('mList1 == mList2 is', mList1 == mList2)
+    mList1.sort()
+    mList1.printall()
+    print('mList1 < mList2 is', mList1 < mList2)
+    mList1.del_(2)
+    mList1.printall()
+    mList1.insert(0, 10)
+    mList1.printall()
+    print('mList1 > mList2 is', mList1 > mList2)
+    print(len(mList1))
+    # practice5
+    mList1.from_list([1, 2, 's'])
+    mList1.printall()
+    print(mList1.to_list())
+    # practice6
+    mList1.rev_visit(print)
+    # practice7
+    mList2.sort()
+    mList2.del_minimal()
+    mList2.printall()
+    mList2.del_if(lambda x: x<=6)
+    mList2.printall()
+    mList2.del_duplicate()
+    mList2.printall()
+    #practice8
+    mList3 = LList()
+    mList3.from_list([27, -1])
+    mList2.interleaving(mList3)
+    mList2.printall()
+    #practice9
+    mList2.sort0()
+    mList2.printall()
+    #practice10
+    x, y = mList2.partition(lambda x: x%3 == 0)
+    x.printall()
+    y.printall()
 
 
 

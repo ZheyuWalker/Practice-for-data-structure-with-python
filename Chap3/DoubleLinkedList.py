@@ -48,10 +48,12 @@ class DLList(LList1):
         else:
             self._head = None
         return e
-random.seed(1)
-mList1 = LList1()
-mList1.prepend(98)
-for i in range(11, 20):
-    mList1.append(random.randint(1,20))
-for x in mList1.filter(lambda y: y%2 == 0):
-    print(x)
+    
+if __name__ == '__main__':
+    random.seed(1)
+    mList1 = LList1()
+    mList1.prepend(98)
+    for i in range(11, 20):
+        mList1.append(random.randint(1,20))
+    for x in mList1.filter(lambda y: y%2 == 0):
+        print(x)
