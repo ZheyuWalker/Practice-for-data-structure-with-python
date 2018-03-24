@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 #-*- coding:utf-8 -*-
 
-from LinkedList import LNode, LList1
+from LinkedList_1_10 import LNode, LList1
+import random
 # Double-Linked List
 class DLNode(LNode):
     def __init__(self, elem, prev = None, next_ = None):
