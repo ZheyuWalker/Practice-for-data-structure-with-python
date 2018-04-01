@@ -50,3 +50,15 @@ def match(re, text):
         if match_here(re, 0, text, n):
             return n
     return -1
+
+import re
+def sumInt(fname):
+    re_int = r'\b(0|[1-9]\d*)\b'
+    inf = open(fname)
+    if inf == None:
+        return 0
+    int_list = map(int, re.findall(re_int, inf.read()))
+    s = 0
+    for n in int_list:
+        s += n
+    return s
