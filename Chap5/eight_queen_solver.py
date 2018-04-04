@@ -66,6 +66,7 @@ def eight_queens_solver(b, j = 0):
         b.place_queen(i, j)
         st.append((i,j))
         i += 1
+        j = 0
     while len(st) < n:
         while j < n:
             # print('i = {}, j = {}'.format(i, j))
@@ -108,4 +109,4 @@ if __name__ == '__main__':
     b.take_queen(3, 2)
     b.printall()
     '''
-    print(eight_queens_solver(b))
+    print(eight_queens_solver(b, 5))
