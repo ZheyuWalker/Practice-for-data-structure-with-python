@@ -57,21 +57,6 @@ def is_number(x):
 
 # evaluate defined expression
 def eval_exp(e):
-    # judge is e is an operator
-    if is_basic_exp(e):
-        return e
-    # Recurrsion
-    op, a, b = e[0], eval_exp(e[1]), eval_exp(e[2])
-    if op == '+':
-        return eval_sum(a, b)
-    elif op == '-':
-        return eval_diff(a, b)
-    elif op == '*':
-        return eval_prod(a, b)
-    elif op == '/':
-        return eval_div(a, b)
-    else:
-        raise ValueError('Unknown operator:', op)
 
     def eval_sum(a, b):
         if is_number(a) and is_number(b):
@@ -93,10 +78,38 @@ def eval_exp(e):
             raise ZeroDivisionError
         return make_div(a, b)
 
+    def eval_prod(a, b):
+        if is_number(a) and is_number(b):
+            return a * b
+        return make_prod(a, b)
+
+    def eval_diff(a, b):
+        if is_number(a) and is_number(b):
+            return a - b
+        return make_diff(a, b)
+    # judge is e is an operator
+    if is_basic_exp(e):
+        return e
+    # Recurrsion
+    op, a, b = e[0], eval_exp(e[1]), eval_exp(e[2])
+    if op == '+':
+        return eval_sum(a, b)
+    elif op == '-':
+        return eval_diff(a, b)
+    elif op == '*':
+        return eval_prod(a, b)
+    elif op == '/':
+        return eval_div(a, b)
+    else:
+        raise ValueError('Unknown operator:', op)
+
+    
 
 
 if __name__ == '__main__':
     e1 = make_prod(3, make_sum(2,5))
-    e2 = make_sum(make_prod('a', 2), make_prod('b', 7))
+    e2 = make_sum(make_prod(-1, 2), make_prod(3, 7))
     print(e1)
     print(e2)
+    print(eval_exp(e1))
+    print(eval_exp(e2))

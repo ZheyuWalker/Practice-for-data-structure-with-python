@@ -104,7 +104,7 @@ def heap_sort(elems):
     end = len(elems)
     for i in range(end//2, -1, -1):
         siftdown(elems, elems[i], i, end)
-    # print(elems)
+    print(elems)
     for i in range((end-1), 0, -1):
         e = elems[i]
         elems[i] = elems[0]
